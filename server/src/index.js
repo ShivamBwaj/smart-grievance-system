@@ -13,11 +13,20 @@ import {
   readAllRaw,
   replaceAllRaw,
 } from "./store.js";
+import { whatsappWebhook } from "./whatsapp.js";
 
 const app = express();
 app.disable("x-powered-by");
-app.use(cors()); // harmless: prod calls arrive via Vercel's server-side rewrite
-app.use(express.json({ limit: "12mb" })); // photos arrive as data URLs
+app.use(cors());
+// Twilio posts form-encoded webhooks; the rest of the API is JSON (photos as data URLs).
+app.use("/api/whatsapp", express.urlencoded({ extended: false }));
+app.use(express.json({ limit: "12mb" }));
+
+// WhatsApp (Twilio) intake: file a grievance from a chat message, reply with the id.
+app.post("/api/whatsapp", whatsappWebhook);
+app.get("/api/whatsapp", (_req, res) =>
+  res.type("text/plain").send("CivicLens WhatsApp webhook. Point your Twilio sandbox 'When a message comes in' here (POST).")
+);
 
 app.get("/health", (_req, res) => res.json({ ok: true, service: "civiclens-api" }));
 
