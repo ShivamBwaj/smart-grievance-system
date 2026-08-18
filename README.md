@@ -7,6 +7,8 @@ One OpenAI call classifies a complaint (language, department, priority, SLA, dup
 > **📄 Product overview, user flows & flowcharts:** [`docs/PRODUCT-OVERVIEW.md`](docs/PRODUCT-OVERVIEW.md) - product-centric summary with Mermaid diagrams (render on GitHub), plus a slide-by-slide PPT outline. Start here for the pitch.
 >
 > **Repo:** https://github.com/ShivamBwaj/smart-grievance-system · **Live:** deployed on Vercel (_add URL_)
+>
+> **Backend/infra:** Vercel frontend (Next.js + OpenAI classify) + Azure VM (Express + SQLite persistence) + Twilio WhatsApp intake. See [`docs/BACKEND-DEPLOYMENT.md`](docs/BACKEND-DEPLOYMENT.md) and [`docs/WHATSAPP-INTEGRATION.md`](docs/WHATSAPP-INTEGRATION.md).
 
 ## Run
 
