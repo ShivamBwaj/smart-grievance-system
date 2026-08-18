@@ -47,9 +47,18 @@ export default function QueuePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Sync failed");
       await load();
+      if (data.created > 0) {
+        // Imported tickets are auto-routed to the responsible department, not
+        // the current officer — show "All city" so they're actually visible.
+        setMineOnly(false);
+        setSt("open");
+        setCat("all");
+        setPri("all");
+        setQ("");
+      }
       setSyncMsg(
         data.created > 0
-          ? `Imported ${data.created} new WhatsApp grievance${data.created === 1 ? "" : "s"} (scanned ${data.scanned}).`
+          ? `Imported ${data.created} new WhatsApp grievance${data.created === 1 ? "" : "s"} — showing all city so you can see them.`
           : `No new WhatsApp messages to import (scanned ${data.scanned}).`,
       );
     } catch (e) {
