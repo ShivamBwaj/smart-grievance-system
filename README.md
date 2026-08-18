@@ -4,6 +4,10 @@ AI grievance intake for Bhopal Municipal Corporation. Built for VITISH '26 / BGI
 
 One OpenAI call classifies a complaint (language, department, priority, SLA, duplicates). The UI is a Trench-style ops console.
 
+> **📄 Product overview, user flows & flowcharts:** [`docs/PRODUCT-OVERVIEW.md`](docs/PRODUCT-OVERVIEW.md) — product-centric summary with Mermaid diagrams (render on GitHub), plus a slide-by-slide PPT outline. Start here for the pitch.
+>
+> **Repo:** https://github.com/ShivamBwaj/smart-grievance-system · **Live:** deployed on Vercel (_add URL_)
+
 ## Run
 
 ```bash
@@ -36,6 +40,10 @@ One OpenAI call (`OPENAI_MODEL`, default `gpt-4o-mini`) does language detect →
 - **Notifications** — status updates surfaced back to the citizen on their portal.
 - **Officer** (`/ops/queue`) — own assignments (toggle all-city), HITL override, assign, **resolution-photo upload → resolve**.
 - **Admin** (`/ops`, `/ops/analytics`, `/ops/hotspots`) — city dashboard, workload/priority/channel charts, ward hotspots, **escalations (SLA + urgent)**, **officer scorecard** (open / resolved / avg time / rating).
+
+## Tech stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Framer Motion · Leaflet (maps) · Recharts (charts) · lucide-react · OpenAI (`gpt-4o-mini`, vision) · Vercel. Data is an in-memory store + JSON file (reseeds on serverless cold start); auth is a localStorage demo layer. Full breakdown and architecture diagram in [`docs/PRODUCT-OVERVIEW.md`](docs/PRODUCT-OVERVIEW.md#9-tech-stack).
 
 ## Dev note
 
