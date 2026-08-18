@@ -97,8 +97,8 @@ body {
   font-family: var(--font-body);
   color: var(--color-foreground);
   background-color: var(--color-background);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -194,11 +194,25 @@ option {
 
 .mono-data {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
 }
+
+/* Labeled meta chip used on ticket cards — icon + value, readable, spaced. */
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  line-height: 1;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+.meta-chip svg { color: var(--color-muted); flex-shrink: 0; }
+.meta-divider { width: 1px; height: 12px; background: var(--color-border-strong); flex-shrink: 0; }
 
 .live-dot {
   position: relative;

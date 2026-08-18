@@ -8,19 +8,20 @@ function hoursFromNow(h: number) {
   return new Date(Date.now() + h * 36e5).toISOString();
 }
 
-// Lightweight SVG "photo" placeholders so evidence is visible in the demo without real uploads.
-function photo(caption: string, c1: string, c2: string) {
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${c1}'/><stop offset='1' stop-color='${c2}'/></linearGradient></defs><rect width='400' height='300' fill='url(#g)'/><circle cx='200' cy='130' r='60' fill='rgba(0,0,0,0.25)'/><rect x='0' y='232' width='400' height='68' fill='rgba(0,0,0,0.5)'/><text x='20' y='272' font-family='sans-serif' font-size='19' font-weight='700' fill='#fff'>${caption}</text><text x='380' y='32' text-anchor='end' font-family='monospace' font-size='12' fill='rgba(255,255,255,0.65)'>CIVIC EVIDENCE</text></svg>`;
-  return "data:image/svg+xml," + encodeURIComponent(svg);
-}
-
+// Real photo evidence, bundled under /public/evidence and served as static assets.
+// Keeps the demo realistic without any live uploads. See public/evidence/*.jpg.
 const EVIDENCE: Record<string, { before?: string; after?: string }> = {
-  "CL-240817-1102": { before: photo("POTHOLE · MP NAGAR Z2", "#3a3a3a", "#161616") },
-  "CL-240817-2210": { before: photo("NO WATER · ARERA COLONY", "#1e3a5f", "#0f2038") },
-  "CL-240817-4091": { before: photo("GARBAGE PILE · TT NAGAR", "#4a3d1a", "#241d0d") },
+  "CL-240817-1102": { before: "/evidence/pothole.jpg" }, // pothole · MP Nagar
+  "CL-240817-2210": { before: "/evidence/water-tanker.jpg" }, // no water · Arera Colony
+  "CL-240817-3044": { before: "/evidence/streetlight.jpg" }, // dark road · Kolar
+  "CL-240817-4091": { before: "/evidence/garbage.jpg" }, // garbage pile · Shahpura
+  "CL-240817-6612": { before: "/evidence/manhole.jpg" }, // open manhole · Habibganj
+  "CL-240817-7720": { before: "/evidence/transformer.jpg" }, // sparking transformer · New Market
+  "CL-240816-0881": { before: "/evidence/flood.jpg" }, // nala overflow · Indrapuri
+  "CL-240816-0199": { before: "/evidence/playground.jpg" }, // park · Bairagarh
   "CL-240815-3001": {
-    before: photo("BROKEN ROAD · KOLAR", "#3a3a3a", "#161616"),
-    after: photo("RESURFACED · CLEARED", "#2e6b4a", "#17402c"),
+    before: "/evidence/footpath.jpg", // broken footpath tiles
+    after: "/evidence/road-fixed.jpg", // resurfaced
   },
 };
 

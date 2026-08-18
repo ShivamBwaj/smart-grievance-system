@@ -9,6 +9,7 @@ import {
   LogOut,
   MapPin,
   Mic,
+  Plus,
   Send,
   Shield,
   Square,
@@ -77,6 +78,7 @@ function CitizenPortal() {
   const open = mine.filter((c) => c.status !== "resolved" && c.status !== "rejected");
   const done = mine.filter((c) => c.status === "resolved" || c.status === "rejected");
   const nearby = tickets.filter((c) => !c.duplicateOf && c.status !== "resolved").slice(0, 5);
+  const meTooTotal = mine.reduce((s, c) => s + c.upvotes, 0);
 
   function onLogout() {
     logout();
@@ -245,35 +247,37 @@ function CitizenPortal() {
         </div>
       </header>
 
-      <div className="max-w-[1280px] mx-auto p-5 lg:p-8 grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] gap-6">
+      <div className="max-w-[1440px] mx-auto p-5 lg:p-8 space-y-6">
+        {/* KPI row — turns the page into a dashboard and uses the full width */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            ["Open", open.length, "In progress with the city"],
+            ["Resolved", done.length, "Closed and rated"],
+            ["Reports filed", mine.length, "Across all channels"],
+            ["Neighbours backing you", meTooTotal, "Me Too on your issues"],
+          ].map(([k, v, s]) => (
+            <HudFrame key={String(k)} className="p-4">
+              <p className="mono-label--muted">{String(k)}</p>
+              <p className="mt-2 text-3xl font-semibold tabular">{v}</p>
+              <p className="mt-1 text-[12.5px] text-muted">{s}</p>
+            </HudFrame>
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] gap-6 items-start">
         {/* LEFT — compose */}
         <HudFrame ticks className="p-5 lg:p-6">
           <p className="mono-label">FILE A GRIEVANCE</p>
           <h2 className="mt-2 text-xl" style={{ fontFamily: "var(--font-display)" }}>
             Tell the city what broke.
           </h2>
-          <p className="mt-1 text-[13px] text-muted-foreground">
-            Hindi, Tamil, English — or a photo. One pass classifies, scores, and routes it.
+          <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">
+            Type it, speak it, or attach a photo in Hindi, Tamil, or English. One AI pass
+            classifies, scores urgency, and routes it to the right department.
           </p>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {(["text", "voice", "image", "whatsapp"] as Channel[]).map((ch) => (
-              <button
-                key={ch}
-                onClick={() => setChannel(ch)}
-                className={cn(
-                  "px-3 py-1.5 rounded-full text-[11px] uppercase tracking-[0.1em] font-medium border",
-                  channel === ch
-                    ? "border-accent text-accent-bright bg-accent-soft"
-                    : "border-border text-muted hover:text-foreground",
-                )}
-              >
-                {ch}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-2">
+          <p className="mono-label--muted mt-5 mb-2">TRY AN EXAMPLE</p>
+          <div className="flex flex-wrap gap-2">
             {[
               {
                 label: "Hindi · water",
@@ -397,27 +401,21 @@ function CitizenPortal() {
         {/* RIGHT — identity + tickets */}
         <div className="space-y-4">
           <HudFrame className="p-5">
-            <p className="mono-label--muted">CITIZEN</p>
+            <p className="mono-label--muted">SIGNED IN AS</p>
             <div className="mt-3 flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-accent-soft text-accent-bright flex items-center justify-center text-sm font-semibold">
+              <div className="w-11 h-11 rounded-full bg-accent-soft text-accent-bright flex items-center justify-center text-base font-semibold">
                 {session.name.slice(0, 1)}
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[15px] font-medium truncate">{session.name}</p>
-                <p className="text-[12px] text-muted-foreground truncate">{session.phone}</p>
+                <p className="text-[12.5px] text-muted-foreground truncate">{session.phone}</p>
               </div>
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {[
-                ["Open", open.length],
-                ["Resolved", done.length],
-                ["Total", mine.length],
-              ].map(([k, v]) => (
-                <div key={String(k)} className="rounded-lg bg-surface-sunken px-3 py-2 border border-border">
-                  <p className="mono-data">{k}</p>
-                  <p className="text-lg font-semibold tabular">{v}</p>
-                </div>
-              ))}
+              <Link
+                href="/track"
+                className="shrink-0 text-[12.5px] text-accent-bright hover:underline"
+              >
+                Track by ID →
+              </Link>
             </div>
           </HudFrame>
 
@@ -499,21 +497,26 @@ function CitizenPortal() {
           </div>
 
           <div>
-            <p className="mono-label mb-2 px-1">NEARBY — TAP ME TOO</p>
+            <p className="mono-label mb-2 px-1">NEARBY — BACK AN ISSUE</p>
             <div className="space-y-2">
               {nearby.map((c) => (
-                <div key={c.id} className="relative">
-                  <TicketRow c={c} />
-                  <button
-                    onClick={() => meToo(c.id)}
-                    className="absolute top-3 right-3 text-[10px] uppercase tracking-widest px-2 py-1 rounded bg-accent-soft text-accent-bright border border-accent/30"
-                  >
-                    Me Too · {c.upvotes}
-                  </button>
-                </div>
+                <TicketRow
+                  key={c.id}
+                  c={c}
+                  action={
+                    <button
+                      onClick={() => meToo(c.id)}
+                      className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider px-2.5 py-1.5 rounded-md bg-accent-soft text-accent-bright border border-accent/30 hover:bg-accent/20 transition-colors"
+                    >
+                      <Plus size={12} />
+                      Me Too · {c.upvotes}
+                    </button>
+                  }
+                />
               ))}
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

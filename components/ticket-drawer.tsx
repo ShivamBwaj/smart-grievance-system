@@ -41,8 +41,8 @@ export function TicketDrawer({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
-      <aside className="fixed top-0 right-0 h-screen w-full sm:w-[380px] z-50 bg-surface border-l border-border overflow-y-auto">
+      <div className="fixed inset-0 bg-black/60 z-[80]" onClick={onClose} />
+      <aside className="fixed top-0 right-0 h-screen w-full sm:w-[400px] z-[90] bg-surface border-l border-border overflow-y-auto shadow-2xl">
         <div className="sticky top-0 bg-surface/95 backdrop-blur border-b border-border px-5 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="mono-data">{c.id}</span>

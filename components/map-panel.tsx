@@ -132,7 +132,9 @@ export function MapPanel({
   }
 
   return (
-    <div className="relative" style={{ height }}>
+    // `isolation: isolate` contains Leaflet's internal z-index:1000 controls in their
+    // own stacking context so they can't paint over the ticket drawer / modals.
+    <div className="relative" style={{ height, isolation: "isolate" }}>
       <div
         ref={elRef}
         style={{ height, borderRadius: 8, overflow: "hidden", background: "#0c0c0e" }}
