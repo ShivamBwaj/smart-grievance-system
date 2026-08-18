@@ -10,6 +10,8 @@ import {
   updateComplaint,
   upvoteComplaint,
   getAnalytics,
+  readAllRaw,
+  replaceAllRaw,
 } from "./store.js";
 
 const app = express();
@@ -18,6 +20,17 @@ app.use(cors()); // harmless: prod calls arrive via Vercel's server-side rewrite
 app.use(express.json({ limit: "12mb" })); // photos arrive as data URLs
 
 app.get("/health", (_req, res) => res.json({ ok: true, service: "civiclens-api" }));
+
+// Raw storage for the Vercel frontend (which owns AI classification).
+app.get("/api/_all", (_req, res) => res.json(readAllRaw()));
+app.put("/api/_all", (req, res) => {
+  try {
+    const n = replaceAllRaw(req.body);
+    res.json({ ok: true, count: n });
+  } catch (e) {
+    res.status(400).json({ error: e?.message || "bad payload" });
+  }
+});
 
 app.get("/api/complaints", (_req, res) => {
   res.json(listComplaints());

@@ -14,6 +14,13 @@ const DATA_PATH = process.env.VERCEL
   ? path.join(os.tmpdir(), "civiclens-complaints.json")
   : path.join(process.cwd(), "data", "complaints.json");
 
+// Persistence backend. In production the data lives in SQLite on the Azure VM;
+// the frontend (Vercel) keeps doing the OpenAI classification — which the VM's
+// region can't reach — and reads/writes the list here over server-side HTTP.
+// Local dev (no BACKEND_URL) falls back to the JSON file + in-repo seed.
+const BACKEND_URL =
+  process.env.BACKEND_URL || (process.env.NODE_ENV === "production" ? "http://52.184.22.2" : "");
+
 let cache: Complaint[] | null = null;
 let writeQueue = Promise.resolve();
 
@@ -27,6 +34,12 @@ function withLock<T>(fn: () => Promise<T>): Promise<T> {
 }
 
 async function readAll(): Promise<Complaint[]> {
+  if (BACKEND_URL) {
+    // Always fresh in serverless: another instance may have written since.
+    const res = await fetch(`${BACKEND_URL}/api/_all`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`backend read failed (${res.status})`);
+    return (await res.json()) as Complaint[];
+  }
   if (cache) return cache;
   try {
     const raw = await fs.readFile(DATA_PATH, "utf8");
@@ -40,6 +53,15 @@ async function readAll(): Promise<Complaint[]> {
 }
 
 async function persist(rows: Complaint[]) {
+  if (BACKEND_URL) {
+    const res = await fetch(`${BACKEND_URL}/api/_all`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(rows),
+    });
+    if (!res.ok) throw new Error(`backend write failed (${res.status})`);
+    return;
+  }
   cache = rows; // in-memory is the source of truth; disk is best-effort
   try {
     await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });

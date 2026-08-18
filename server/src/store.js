@@ -5,7 +5,6 @@ import { classifyComplaint } from "./classify.js";
 import { pickOfficer, SLA_HOURS, clusterKey, newId } from "./domain.js";
 import { loadAll, persistAll, seedIfEmpty } from "./db.js";
 
-let cache = null;
 let writeQueue = Promise.resolve();
 
 function withLock(fn) {
@@ -14,16 +13,28 @@ function withLock(fn) {
   return run;
 }
 
+// Always read fresh from SQLite. At demo scale this is trivially cheap and it
+// keeps the raw /api/_all endpoints (used by the Vercel frontend) perfectly
+// consistent with the VM's own create/update paths.
 function readAll() {
-  if (cache) return cache;
   seedIfEmpty();
-  cache = loadAll();
-  return cache;
+  return loadAll();
 }
 
 function persist(rows) {
-  cache = rows;
   persistAll(rows);
+}
+
+// Raw storage access for the frontend-as-brains model: Vercel classifies with
+// OpenAI, then reads/writes the whole list here.
+export function readAllRaw() {
+  seedIfEmpty();
+  return loadAll();
+}
+export function replaceAllRaw(rows) {
+  if (!Array.isArray(rows)) throw new Error("expected an array of complaints");
+  persistAll(rows);
+  return rows.length;
 }
 
 export function listComplaints() {
