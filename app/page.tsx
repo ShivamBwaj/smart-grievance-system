@@ -34,7 +34,7 @@ export default function HomePage() {
         <section className="border-y border-border py-5">
           <div className="max-w-[1200px] mx-auto px-6">
             <p className="text-xs text-muted text-center tracking-widest uppercase">
-              Built for municipal desks drowning in Hindi, Tamil, and WhatsApp photos
+              Built for municipal desks drowning in Tamil, Hindi, and WhatsApp photos
             </p>
           </div>
         </section>

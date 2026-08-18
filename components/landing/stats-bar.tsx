@@ -6,9 +6,9 @@ import { AnimatedNumber } from "@/components/animated-number";
 
 const stats = [
   { value: 4, label: "Intake channels", type: "number" as const },
-  { value: "1 call", label: "AI classify", type: "static" as const },
+  { value: "1 pass", label: "NLP pipeline", type: "static" as const },
   { value: "<4h", label: "Urgent SLA", type: "static" as const },
-  { value: "7", label: "GCC wards", type: "number" as const },
+  { value: "3", label: "Languages", type: "number" as const },
 ];
 
 export function StatsBar() {

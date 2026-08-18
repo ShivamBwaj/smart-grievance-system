@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { CheckCircle2, Languages, Route, ShieldAlert } from "lucide-react";
 
-const SAMPLE = "तीन दिन से पानी नहीं आ रहा है अरेरा कॉलोनी";
+const SAMPLE = "तीन दिन से पानी नहीं आ रहा है अड्यार";
 
 const results = [
-  { icon: Languages, color: "text-blue-400", bg: "bg-blue-400/10", text: "Hindi detected → English translation ready" },
-  { icon: Route, color: "text-amber-400", bg: "bg-amber-400/10", text: "Category: Water · PHE / WTR · Ward 18" },
-  { icon: ShieldAlert, color: "text-rose-400", bg: "bg-rose-400/10", text: "Priority urgent · SLA 4h · confidence 96%" },
-  { icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Queued to A. Khan · tanker desk notified" },
+  { icon: Languages, color: "text-blue-400", bg: "bg-blue-400/10", text: "Language: Hindi detected → auto-translated to English" },
+  { icon: Route, color: "text-amber-400", bg: "bg-amber-400/10", text: "NLP classify: Water · Metro Water / WTR · Ward 18 Adyar" },
+  { icon: ShieldAlert, color: "text-rose-400", bg: "bg-rose-400/10", text: "Sentiment: distress · Priority URGENT · SLA 4h · 96% confidence" },
+  { icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-400/10", text: "Routed to A. Khan · tanker desk auto-notified" },
 ];
 
 export function DashboardPreview() {
@@ -50,7 +50,7 @@ export function DashboardPreview() {
   }, [typed]);
 
   return (
-    <section ref={sectionRef} className="py-20 lg:py-28">
+    <section id="demo" ref={sectionRef} className="py-20 lg:py-28">
       <div className="max-w-[1200px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

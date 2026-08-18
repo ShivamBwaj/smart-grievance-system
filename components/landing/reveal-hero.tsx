@@ -69,10 +69,10 @@ function RevealLayer({ image, cursorX, cursorY }: { image: string; cursorX: numb
 }
 
 const NAV_LINKS = [
-  { label: "Report", href: "/login?next=/citizen" },
-  { label: "Track", href: "/track" },
+  { label: "Channels", href: "#channels" },
   { label: "How it works", href: "#how" },
-  { label: "Live map", href: "/login?next=/ops" },
+  { label: "Live demo", href: "#demo" },
+  { label: "Track", href: "/track" },
 ];
 
 export function RevealHero() {
@@ -112,15 +112,31 @@ export function RevealHero() {
 
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1">
           <span className="px-4 py-1.5 rounded-full text-sm font-medium text-white bg-white/20">Home</span>
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.label}
-              href={l.href}
-              className="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors"
-            >
-              {l.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((l) =>
+            l.href.startsWith("#") ? (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById(l.href.slice(1))
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+                className="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors"
+              >
+                {l.label}
+              </a>
+            ) : (
+              <Link
+                key={l.label}
+                href={l.href}
+                className="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors"
+              >
+                {l.label}
+              </Link>
+            ),
+          )}
         </div>
 
         <Link
@@ -173,7 +189,7 @@ export function RevealHero() {
         {/* bottom-left paragraph */}
         <div className="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] z-50 hero-anim hero-fade" style={{ animationDelay: "0.7s" }}>
           <p className="text-sm text-white/80 leading-relaxed">
-            Every complaint is a signal in the dark. CivicLens reads it in any language, scores the urgency, and routes it to the desk that can fix it.
+            Every complaint is a signal in the dark. CivicLens reads it in any language, gauges the distress, scores the urgency, and routes it to the desk that can fix it.
           </p>
         </div>
 
@@ -183,7 +199,7 @@ export function RevealHero() {
           style={{ animationDelay: "0.85s" }}
         >
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-            Move the light across India - watch grievances surface ward by ward, from night into day.
+            Move the light across the map - watch grievances surface ward by ward, from night into day.
           </p>
           <Link
             href="/login?next=/citizen"
