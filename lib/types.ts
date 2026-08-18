@@ -42,6 +42,7 @@ export type Complaint = {
   phone: string | null;
   anonymous: boolean;
   channel: Channel;
+  waSid?: string | null;
   originalText: string;
   language: string;
   languageName: string;
@@ -105,6 +106,7 @@ export type NewComplaintInput = {
   phone?: string | null;
   anonymous?: boolean;
   channel: Channel;
+  waSid?: string | null;
   originalText: string;
   imageDataUrl?: string | null;
   lat?: number | null;

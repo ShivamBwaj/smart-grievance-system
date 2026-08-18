@@ -112,6 +112,7 @@ export async function createComplaint(input: NewComplaintInput): Promise<Complai
       phone: input.anonymous ? null : input.phone ?? null,
       anonymous: Boolean(input.anonymous),
       channel: input.channel,
+      waSid: input.waSid ?? null,
       originalText: input.originalText,
       language: ai.language,
       languageName: ai.languageName,

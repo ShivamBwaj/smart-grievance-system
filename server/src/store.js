@@ -76,6 +76,7 @@ export function createComplaint(input) {
       phone: input.anonymous ? null : input.phone ?? null,
       anonymous: Boolean(input.anonymous),
       channel: input.channel,
+      waSid: input.waSid ?? null, // Twilio message id, for WhatsApp-sync dedupe
       originalText: input.originalText,
       language: ai.language,
       languageName: ai.languageName,

@@ -22,6 +22,31 @@ async function fetchTwilioMedia(url) {
   return `data:${type};base64,${buf.toString("base64")}`;
 }
 
+// Pull recent inbound WhatsApp messages from Twilio (the VM holds the creds).
+// Returned raw so the Vercel side can classify with OpenAI and store.
+export async function fetchTwilioInbound() {
+  const sid = process.env.TWILIO_ACCOUNT_SID;
+  const token = process.env.TWILIO_AUTH_TOKEN;
+  if (!sid || !token) throw new Error("Twilio credentials not set on the server");
+  const url = `https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json?PageSize=50`;
+  const res = await fetch(url, {
+    headers: { Authorization: "Basic " + Buffer.from(`${sid}:${token}`).toString("base64") },
+  });
+  if (!res.ok) throw new Error(`Twilio list failed (${res.status})`);
+  const data = await res.json();
+  return (data.messages || [])
+    .filter((m) => m.direction === "inbound" && String(m.from || "").startsWith("whatsapp:"))
+    .map((m) => ({
+      sid: m.sid,
+      from: String(m.from).replace("whatsapp:", ""),
+      body: String(m.body || "").trim(),
+      numMedia: parseInt(m.num_media || "0", 10) || 0,
+      at: m.date_sent || m.date_created,
+    }))
+    .filter((m) => m.body && !/^join\s/i.test(m.body)) // skip sandbox "join <code>" messages
+    .reverse(); // oldest first
+}
+
 export async function whatsappWebhook(req, res) {
   const body = req.body || {};
   const from = String(body.From || "").replace("whatsapp:", "").trim();

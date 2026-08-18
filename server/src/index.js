@@ -13,7 +13,7 @@ import {
   readAllRaw,
   replaceAllRaw,
 } from "./store.js";
-import { whatsappWebhook } from "./whatsapp.js";
+import { whatsappWebhook, fetchTwilioInbound } from "./whatsapp.js";
 
 const app = express();
 app.disable("x-powered-by");
@@ -27,6 +27,14 @@ app.post("/api/whatsapp", whatsappWebhook);
 app.get("/api/whatsapp", (_req, res) =>
   res.type("text/plain").send("CivicLens WhatsApp webhook. Point your Twilio sandbox 'When a message comes in' here (POST).")
 );
+// Raw inbound WhatsApp messages (VM holds Twilio creds; Vercel classifies + stores).
+app.get("/api/whatsapp/inbound", async (_req, res) => {
+  try {
+    res.json(await fetchTwilioInbound());
+  } catch (e) {
+    res.status(502).json({ error: e?.message || "Twilio fetch failed" });
+  }
+});
 
 app.get("/health", (_req, res) => res.json({ ok: true, service: "civiclens-api" }));
 
