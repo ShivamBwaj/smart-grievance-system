@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 const ROLE_CARDS: { role: Role; label: string; blurb: string; icon: typeof UserIcon }[] = [
   { role: "citizen", label: "Citizen", blurb: "File & track grievances", icon: UserIcon },
   { role: "officer", label: "Officer", blurb: "Work an assigned queue", icon: ShieldCheck },
-  { role: "admin", label: "Admin", blurb: "City-wide command & audit", icon: Building2 },
+  { role: "supervisor", label: "Supervisor", blurb: "City-wide command & audit", icon: Building2 },
 ];
 
 function LoginInner() {

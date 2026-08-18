@@ -23,7 +23,7 @@ export default function OpsOverviewPage() {
   const [rows, setRows] = useState<Complaint[]>([]);
   const [stats, setStats] = useState<AnalyticsPayload | null>(null);
 
-  // City overview is the admin command view; officers work their queue.
+  // City overview is the supervisor command view; officers work their queue.
   useEffect(() => {
     if (user && user.role === "officer") router.replace("/ops/queue");
   }, [user, router]);

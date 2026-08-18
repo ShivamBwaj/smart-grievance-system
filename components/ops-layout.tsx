@@ -19,16 +19,16 @@ import { useAuth, type Role } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const nav: { href: string; label: string; icon: typeof LayoutDashboard; roles: Role[] }[] = [
-  { href: "/ops", label: "Overview", icon: LayoutDashboard, roles: ["admin"] },
-  { href: "/ops/queue", label: "Queue", icon: ListTodo, roles: ["officer", "admin"] },
-  { href: "/ops/board", label: "Board", icon: KanbanSquare, roles: ["officer", "admin"] },
-  { href: "/ops/hotspots", label: "Live map", icon: MapPinned, roles: ["officer", "admin"] },
-  { href: "/ops/analytics", label: "Analytics", icon: Activity, roles: ["admin"] },
+  { href: "/ops", label: "Overview", icon: LayoutDashboard, roles: ["supervisor"] },
+  { href: "/ops/queue", label: "Queue", icon: ListTodo, roles: ["officer", "supervisor"] },
+  { href: "/ops/board", label: "Board", icon: KanbanSquare, roles: ["officer", "supervisor"] },
+  { href: "/ops/hotspots", label: "Live map", icon: MapPinned, roles: ["officer", "supervisor"] },
+  { href: "/ops/analytics", label: "Analytics", icon: Activity, roles: ["supervisor"] },
 ];
 
 export function OpsLayout({ children }: { children: ReactNode }) {
   return (
-    <AuthGuard roles={["officer", "admin"]}>
+    <AuthGuard roles={["officer", "supervisor"]}>
       <OpsShell>{children}</OpsShell>
     </AuthGuard>
   );
@@ -39,7 +39,7 @@ function OpsShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
-  const role = user?.role ?? "admin";
+  const role = user?.role ?? "supervisor";
   const items = nav.filter((n) => n.roles.includes(role));
 
   function onLogout() {

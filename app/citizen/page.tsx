@@ -38,7 +38,7 @@ type Rec = {
 
 export default function CitizenPage() {
   return (
-    <AuthGuard roles={["citizen", "admin"]}>
+    <AuthGuard roles={["citizen", "supervisor"]}>
       <CitizenPortal />
     </AuthGuard>
   );
@@ -243,7 +243,7 @@ function CitizenPortal() {
           <Link href="/track" className="mono-data hover:text-foreground">
             Track by ID
           </Link>
-          {user!.role === "admin" && (
+          {user!.role === "supervisor" && (
             <Link href="/ops" className="mono-data hover:text-foreground">
               Ops console →
             </Link>

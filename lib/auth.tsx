@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-export type Role = "citizen" | "officer" | "admin";
+export type Role = "citizen" | "officer" | "supervisor";
 
 export type User = {
   id: string;
@@ -52,10 +52,10 @@ export const DEMO_USERS: StoredUser[] = [
   },
   {
     id: "a-gcc",
-    name: "Priya Desai",
-    email: "admin@gcc.gov.in",
+    name: "Anand Rao",
+    email: "supervisor@gcc.gov.in",
     phone: "+91 75540 00000",
-    role: "admin",
+    role: "supervisor",
     password: "demo123",
   },
 ];
@@ -63,7 +63,7 @@ export const DEMO_USERS: StoredUser[] = [
 export const ROLE_HOME: Record<Role, string> = {
   citizen: "/citizen",
   officer: "/ops/queue",
-  admin: "/ops",
+  supervisor: "/ops",
 };
 
 function readRegistry(): StoredUser[] {

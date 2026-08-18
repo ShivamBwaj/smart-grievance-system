@@ -17,7 +17,7 @@ export default function QueuePage() {
   const [cat, setCat] = useState<string>("all");
   const [pri, setPri] = useState<string>("all");
   const [st, setSt] = useState<string>("open");
-  // Officers land on their own assignments; admins see the whole city.
+  // Officers land on their own assignments; supervisors see the whole city.
   const [mineOnly, setMineOnly] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [syncMsg, setSyncMsg] = useState<string | null>(null);

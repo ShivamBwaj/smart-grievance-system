@@ -6,7 +6,7 @@ export const maxDuration = 60;
 
 // The VM holds the Twilio credentials and proxies the raw inbound list; here on
 // Vercel we classify each new message with OpenAI and persist it (to the VM's
-// SQLite via lib/store). Officers/admins trigger this from the Ops console.
+// SQLite via lib/store). Officers/supervisors trigger this from the Ops console.
 const BACKEND = process.env.BACKEND_URL || "http://52.184.22.2";
 
 type Inbound = { sid: string; from: string; body: string; numMedia: number; at?: string };
