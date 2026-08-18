@@ -130,7 +130,7 @@ input, textarea, select { font-family: inherit; }
 }
 .leaflet-bar a:hover { background: #1c1c1e; }
 
-/* SVG <text> defaults to serif — force the system font everywhere (charts, maps, icons). */
+/* SVG <text> defaults to serif - force the system font everywhere (charts, maps, icons). */
 svg text,
 .recharts-text,
 .recharts-cartesian-axis-tick text,
@@ -201,7 +201,7 @@ option {
   color: var(--color-muted-foreground);
 }
 
-/* Labeled meta chip used on ticket cards — icon + value, readable, spaced. */
+/* Labeled meta chip used on ticket cards - icon + value, readable, spaced. */
 .meta-chip {
   display: inline-flex;
   align-items: center;

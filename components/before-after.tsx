@@ -32,7 +32,7 @@ export function BeforeAfter({
   );
 }
 
-/** Interactive 1–5 star rating. Read-only when onRate is omitted. */
+/** Interactive 1-5 star rating. Read-only when onRate is omitted. */
 export function StarRating({
   value,
   onRate,

@@ -6,15 +6,15 @@ import type { Complaint } from "@/lib/types";
 
 // Approximate ward centres so complaints without GPS still land on the map.
 const WARD_COORDS: Record<string, [number, number]> = {
-  "Ward 8 — Bairagarh": [23.28, 77.34],
-  "Ward 12 — MP Nagar": [23.233, 77.434],
-  "Ward 18 — Arera Colony": [23.217, 77.427],
-  "Ward 23 — TT Nagar": [23.232, 77.4],
-  "Ward 31 — Kolar": [23.178, 77.43],
-  "Ward 42 — Shahpura": [23.195, 77.44],
-  "Ward 51 — Habibganj": [23.228, 77.436],
+  "Ward 8 - Anna Nagar": [13.085, 80.2101],
+  "Ward 12 - T. Nagar": [13.0418, 80.2341],
+  "Ward 18 - Adyar": [13.0012, 80.2565],
+  "Ward 23 - Mylapore": [13.0336, 80.2687],
+  "Ward 31 - Velachery": [12.9791, 80.221],
+  "Ward 42 - Guindy": [13.0067, 80.2206],
+  "Ward 51 - Egmore": [13.0732, 80.2609],
 };
-const BHOPAL: [number, number] = [23.2325, 77.4256];
+const CHENNAI: [number, number] = [13.0827, 80.2707];
 
 type Variant = "dark" | "streets" | "satellite";
 const TILES: Record<Variant, { url: string; label: string }> = {
@@ -36,7 +36,7 @@ function hashJitter(seed: string) {
 
 function coordsFor(c: Complaint): [number, number] {
   if (typeof c.lat === "number" && typeof c.lng === "number") return [c.lat, c.lng];
-  const base = WARD_COORDS[c.ward] ?? BHOPAL;
+  const base = WARD_COORDS[c.ward] ?? CHENNAI;
   const [ja, jb] = hashJitter(c.id);
   return [base[0] + ja, base[1] + jb];
 }
@@ -76,7 +76,7 @@ export function MapPanel({
       await import("leaflet/dist/leaflet.css");
       if (cancelled || !elRef.current || mapRef.current) return;
       LRef.current = L;
-      const map = L.map(elRef.current, { zoomControl: true, attributionControl: false }).setView(BHOPAL, 12);
+      const map = L.map(elRef.current, { zoomControl: true, attributionControl: false }).setView(CHENNAI, 12);
       tileRef.current = L.tileLayer(TILES.dark.url, { maxZoom: 19 }).addTo(map);
       mapRef.current = map;
       renderMarkers(L);

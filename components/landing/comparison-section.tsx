@@ -12,7 +12,7 @@ const rows: { feature: string; us: CellValue; portal: CellValue; manual: CellVal
   { feature: "Priority + SLA clock", us: true, portal: "partial", manual: false },
   { feature: "Human-in-the-loop override", us: true, portal: false, manual: true },
   { feature: "Setup time", us: "Minutes", portal: "Weeks", manual: "Already late" },
-  { feature: "Cost to BMC", us: "Demo", portal: "Vendor lock", manual: "Staff hours" },
+  { feature: "Cost to GCC", us: "Demo", portal: "Vendor lock", manual: "Staff hours" },
 ];
 
 function CellContent({ value }: { value: CellValue }) {

@@ -9,7 +9,7 @@ import { clusterKey, newId } from "./utils";
 
 // Serverless platforms (Vercel) have a read-only filesystem except the temp dir.
 // The in-memory `cache` is the source of truth per instance; the file just gives
-// warm-instance persistence. Data reseeds on a cold start — fine for this demo.
+// warm-instance persistence. Data reseeds on a cold start - fine for this demo.
 const DATA_PATH = process.env.VERCEL
   ? path.join(os.tmpdir(), "civiclens-complaints.json")
   : path.join(process.cwd(), "data", "complaints.json");
@@ -45,7 +45,7 @@ async function persist(rows: Complaint[]) {
     await fs.mkdir(path.dirname(DATA_PATH), { recursive: true });
     await fs.writeFile(DATA_PATH, JSON.stringify(rows, null, 2), "utf8");
   } catch {
-    /* read-only FS (serverless) — keep serving from memory */
+    /* read-only FS (serverless) - keep serving from memory */
   }
 }
 
@@ -74,7 +74,7 @@ export async function createComplaint(input: NewComplaintInput): Promise<Complai
 
     const now = new Date().toISOString();
     const master = ai.duplicateOfId ? rows.find((r) => r.id === ai.duplicateOfId) : null;
-    const locationLabel = input.locationLabel || ai.locationExtracted || "Bhopal";
+    const locationLabel = input.locationLabel || ai.locationExtracted || "Chennai";
     const ward = master?.ward || ai.ward;
     const category = master?.category || ai.category;
     const key = clusterKey(category, ward, locationLabel);

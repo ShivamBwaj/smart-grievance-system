@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  Bell,
+  FilePlus2,
   ImagePlus,
+  LayoutGrid,
   Loader2,
   LogOut,
   MapPin,
@@ -57,6 +60,7 @@ function CitizenPortal() {
   const [listening, setListening] = useState(false);
   const [error, setError] = useState("");
   const [flash, setFlash] = useState<Complaint | null>(null);
+  const [view, setView] = useState<"file" | "activity">("file");
   const recRef = useRef<Rec | null>(null);
 
   const refresh = useCallback(async () => {
@@ -116,7 +120,7 @@ function CitizenPortal() {
     };
     const SR = w.SpeechRecognition || w.webkitSpeechRecognition;
     if (!SR) {
-      setError("Voice needs Chrome/Edge. Type instead — same pipeline.");
+      setError("Voice needs Chrome/Edge. Type instead - same pipeline.");
       return;
     }
     if (listening) {
@@ -247,25 +251,52 @@ function CitizenPortal() {
         </div>
       </header>
 
-      <div className="max-w-[1440px] mx-auto p-5 lg:p-8 space-y-6">
-        {/* KPI row — turns the page into a dashboard and uses the full width */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {[
-            ["Open", open.length, "In progress with the city"],
-            ["Resolved", done.length, "Closed and rated"],
-            ["Reports filed", mine.length, "Across all channels"],
-            ["Neighbours backing you", meTooTotal, "Me Too on your issues"],
-          ].map(([k, v, s]) => (
-            <HudFrame key={String(k)} className="p-4">
-              <p className="mono-label--muted">{String(k)}</p>
-              <p className="mt-2 text-3xl font-semibold tabular">{v}</p>
-              <p className="mt-1 text-[12.5px] text-muted">{s}</p>
-            </HudFrame>
+      {/* Tab bar - File is the main event; everything else lives under My activity */}
+      <div
+        className="sticky top-16 z-20 px-5 lg:px-8"
+        style={{ background: "rgba(10,10,11,0.85)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+      >
+        <div className="max-w-[1200px] mx-auto flex items-center gap-1 h-12">
+          {([
+            ["file", "File a grievance", FilePlus2, 0],
+            ["activity", "My activity", LayoutGrid, open.length],
+          ] as const).map(([key, label, Icon, badge]) => (
+            <button
+              key={key}
+              onClick={() => setView(key)}
+              className={cn(
+                "relative inline-flex items-center gap-2 px-4 h-full text-[13.5px] font-medium transition-colors",
+                view === key ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              <Icon size={15} />
+              {label}
+              {badge > 0 && (
+                <span className="ml-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-accent-soft text-accent-bright">
+                  {badge}
+                </span>
+              )}
+              {view === key && <span className="absolute left-3 right-3 -bottom-px h-0.5 rounded-full bg-accent" />}
+            </button>
           ))}
+          <div className="ml-auto">
+            <button
+              onClick={() => setView("activity")}
+              title="Notifications"
+              className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/[0.04] transition-colors"
+            >
+              <Bell size={16} />
+              {notifications.length > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-accent border border-background" />
+              )}
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] gap-6 items-start">
-        {/* LEFT — compose */}
+      {/* ============================ FILE TAB ============================ */}
+      {view === "file" && (
+      <div className="max-w-2xl mx-auto p-5 lg:p-8 space-y-5">
         <HudFrame ticks className="p-5 lg:p-6">
           <p className="mono-label">FILE A GRIEVANCE</p>
           <h2 className="mt-2 text-xl" style={{ fontFamily: "var(--font-display)" }}>
@@ -282,19 +313,19 @@ function CitizenPortal() {
               {
                 label: "Hindi · water",
                 ch: "text" as Channel,
-                loc: "Arera Colony E-7",
+                loc: "Adyar",
                 body: "तीन दिन से वार्ड 18 अरेरा कॉलोनी में पानी बिल्कुल नहीं आ रहा है। टैंकर भी नहीं भेजा।",
               },
               {
-                label: "Pothole · MP Nagar",
+                label: "Pothole · T. Nagar",
                 ch: "whatsapp" as Channel,
-                loc: "MP Nagar Zone 2, near DB Mall",
-                body: "Same pothole near DB Mall MP Nagar, even worse after rain. Cars swerving into the other lane.",
+                loc: "T. Nagar, near Pondy Bazaar",
+                body: "Same pothole near Pondy Bazaar T. Nagar, even worse after rain. Cars swerving into the other lane.",
               },
               {
                 label: "Tamil · manhole",
                 ch: "text" as Channel,
-                loc: "Habibganj station approach",
+                loc: "Egmore station approach",
                 body: "ஹபிப்கஞ்ச் ரயில் நிலையம் அருகில் திறந்த மான்கோல். குழந்தைகள் விளையாடும் இடம். உடனே மூடவும்.",
               },
             ].map((s) => (
@@ -314,7 +345,7 @@ function CitizenPortal() {
 
           <textarea
             className="trench-input mt-3 min-h-[160px] resize-y text-base"
-            placeholder="e.g. तीन दिन से पानी नहीं आ रहा / pothole near DB Mall / open manhole..."
+            placeholder="e.g. तीन दिन से पानी नहीं आ रहा / pothole near Pondy Bazaar / open manhole..."
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
@@ -398,127 +429,141 @@ function CitizenPortal() {
           </p>
         </HudFrame>
 
-        {/* RIGHT — identity + tickets */}
-        <div className="space-y-4">
-          <HudFrame className="p-5">
-            <p className="mono-label--muted">SIGNED IN AS</p>
-            <div className="mt-3 flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-accent-soft text-accent-bright flex items-center justify-center text-base font-semibold">
-                {session.name.slice(0, 1)}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[15px] font-medium truncate">{session.name}</p>
-                <p className="text-[12.5px] text-muted-foreground truncate">{session.phone}</p>
-              </div>
-              <Link
-                href="/track"
-                className="shrink-0 text-[12.5px] text-accent-bright hover:underline"
-              >
-                Track by ID →
-              </Link>
-            </div>
-          </HudFrame>
-
-          {flash && (
-            <HudFrame active className="p-5">
+        {/* Confirmation after filing */}
+        {flash && (
+          <HudFrame active className="p-5">
+            <div className="flex items-center justify-between gap-2">
               <p className="mono-label">TICKET FILED</p>
-              <div className="mt-2 flex items-center justify-between gap-2">
-                <p className="text-[15px] font-medium">{flash.id}</p>
-                <Link href={`/track?id=${flash.id}`} className="mono-data text-accent-bright hover:underline">Track →</Link>
-              </div>
-              <p className="mt-1 text-[13px] text-muted-foreground">{flash.summary}</p>
-              <p className="mt-2 text-[12px] text-muted-foreground leading-relaxed">{flash.reasoning}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-muted-foreground">
-                <span>{flash.department}</span>
-                <span>{flash.priority}</span>
-                <span>{Math.round(flash.confidence * 100)}% confidence</span>
-                {flash.duplicateOf && <span>clustered with {flash.duplicateOf}</span>}
-              </div>
-              {flash.status === "resolved" ? null : (
-                <p className="mt-3 text-[12px] text-positive">
-                  {flash.impactCount > 1
-                    ? `Your report joined an issue already affecting ~${flash.impactCount} people in ${flash.ward}.`
-                    : `Routed to ${flash.department}. SLA ${flash.slaHours}h.`}
-                </p>
-              )}
+              <button onClick={() => setView("activity")} className="mono-data text-accent-bright hover:underline">
+                See in My activity →
+              </button>
+            </div>
+            <div className="mt-2 flex items-center justify-between gap-2">
+              <p className="text-[15px] font-medium">{flash.id}</p>
+              <Link href={`/track?id=${flash.id}`} className="mono-data text-accent-bright hover:underline">Track →</Link>
+            </div>
+            <p className="mt-1 text-[13px] text-muted-foreground">{flash.summary}</p>
+            <p className="mt-2 text-[12.5px] text-muted-foreground leading-relaxed">{flash.reasoning}</p>
+            <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-muted-foreground">
+              <span>{flash.department}</span>
+              <span>{flash.priority}</span>
+              <span>{Math.round(flash.confidence * 100)}% confidence</span>
+              {flash.duplicateOf && <span>clustered with {flash.duplicateOf}</span>}
+            </div>
+            {flash.status === "resolved" ? null : (
+              <p className="mt-3 text-[12px] text-positive">
+                {flash.impactCount > 1
+                  ? `Your report joined an issue already affecting ~${flash.impactCount} people in ${flash.ward}.`
+                  : `Routed to ${flash.department}. SLA ${flash.slaHours}h.`}
+              </p>
+            )}
+          </HudFrame>
+        )}
+      </div>
+      )}
+
+      {/* ============================ ACTIVITY TAB ============================ */}
+      {view === "activity" && (
+      <div className="max-w-[1200px] mx-auto p-5 lg:p-8 space-y-6">
+        {/* KPI tiles */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            ["Open", open.length, "In progress with the city"],
+            ["Resolved", done.length, "Closed and rated"],
+            ["Reports filed", mine.length, "Across all channels"],
+            ["Neighbours backing you", meTooTotal, "Me Too on your issues"],
+          ].map(([k, v, s]) => (
+            <HudFrame key={String(k)} className="p-4">
+              <p className="mono-label--muted">{String(k)}</p>
+              <p className="mt-2 text-3xl font-semibold tabular">{v}</p>
+              <p className="mt-1 text-[12.5px] text-muted">{s}</p>
             </HudFrame>
-          )}
-
-          {notifications.length > 0 && (
-            <div>
-              <p className="mono-label mb-2 px-1">NOTIFICATIONS</p>
-              <HudFrame className="p-4 space-y-2.5">
-                {notifications.map((n, i) => (
-                  <Link key={i} href={`/track?id=${n.ticket}`} className="flex gap-3 group">
-                    <div className={cn("w-1.5 h-1.5 rounded-full mt-1.5 shrink-0", n.kind === "officer" ? "bg-positive" : n.kind === "ai" ? "bg-accent" : "bg-info")} />
-                    <div className="min-w-0">
-                      <p className="text-[13px] group-hover:text-foreground">{n.label}</p>
-                      <p className="mono-data">{n.ticket} · {timeAgo(n.at)}</p>
-                    </div>
-                  </Link>
-                ))}
-              </HudFrame>
-            </div>
-          )}
-
-          <div>
-            <p className="mono-label mb-2 px-1">YOUR OPEN TICKETS</p>
-            <div className="space-y-2">
-              {open.length === 0 && (
-                <p className="text-[13px] text-muted px-1">Nothing open. File on the left.</p>
-              )}
-              {open.map((c) => (
-                <TicketRow key={c.id} c={c} href={`/track?id=${c.id}`} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="mono-label mb-2 px-1">RESOLVED</p>
-            <div className="space-y-2">
-              {done.length === 0 && (
-                <p className="text-[13px] text-muted px-1">No resolved tickets yet.</p>
-              )}
-              {done.map((c) => (
-                <div key={c.id} className="rounded-lg border border-border bg-surface p-3">
-                  <TicketRow c={c} href={`/track?id=${c.id}`} />
-                  <div className="mt-2 flex items-center justify-between gap-2 px-1">
-                    <span className="mono-data">{c.feedbackRating ? "You rated this" : "Rate the fix"}</span>
-                    <StarRating value={c.feedbackRating} onRate={(v) => rate(c.id, v)} size={16} />
-                  </div>
-                  {c.impactCount > 1 && (
-                    <p className="mono-data px-1 pt-1">
-                      Helped an issue affecting ~{c.impactCount} people in this ward.
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="mono-label mb-2 px-1">NEARBY — BACK AN ISSUE</p>
-            <div className="space-y-2">
-              {nearby.map((c) => (
-                <TicketRow
-                  key={c.id}
-                  c={c}
-                  action={
-                    <button
-                      onClick={() => meToo(c.id)}
-                      className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider px-2.5 py-1.5 rounded-md bg-accent-soft text-accent-bright border border-accent/30 hover:bg-accent/20 transition-colors"
-                    >
-                      <Plus size={12} />
-                      Me Too · {c.upvotes}
-                    </button>
-                  }
-                />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
+
+        {/* Two columns: your tickets on the left, updates + nearby on the right */}
+        <div className="grid lg:grid-cols-2 gap-6 items-start">
+          <div className="space-y-6">
+            <section>
+              <p className="mono-label mb-2 px-1">YOUR OPEN TICKETS</p>
+              <div className="space-y-2">
+                {open.length === 0 && (
+                  <p className="text-[13px] text-muted px-1">Nothing open. File a grievance to get started.</p>
+                )}
+                {open.map((c) => (
+                  <TicketRow key={c.id} c={c} href={`/track?id=${c.id}`} />
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <p className="mono-label mb-2 px-1">RESOLVED</p>
+              <div className="space-y-2">
+                {done.length === 0 && (
+                  <p className="text-[13px] text-muted px-1">No resolved tickets yet.</p>
+                )}
+                {done.map((c) => (
+                  <div key={c.id} className="rounded-lg border border-border bg-surface p-3">
+                    <TicketRow c={c} href={`/track?id=${c.id}`} />
+                    <div className="mt-2 flex items-center justify-between gap-2 px-1">
+                      <span className="mono-data">{c.feedbackRating ? "You rated this" : "Rate the fix"}</span>
+                      <StarRating value={c.feedbackRating} onRate={(v) => rate(c.id, v)} size={16} />
+                    </div>
+                    {c.impactCount > 1 && (
+                      <p className="mono-data px-1 pt-1">
+                        Helped an issue affecting ~{c.impactCount} people in this ward.
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <div className="space-y-6">
+            <section>
+              <p className="mono-label mb-2 px-1">NOTIFICATIONS</p>
+              {notifications.length === 0 ? (
+                <p className="text-[13px] text-muted px-1">No updates yet.</p>
+              ) : (
+                <HudFrame className="p-4 space-y-2.5">
+                  {notifications.map((n, i) => (
+                    <Link key={i} href={`/track?id=${n.ticket}`} className="flex gap-3 group">
+                      <div className={cn("w-1.5 h-1.5 rounded-full mt-1.5 shrink-0", n.kind === "officer" ? "bg-positive" : n.kind === "ai" ? "bg-accent" : "bg-info")} />
+                      <div className="min-w-0">
+                        <p className="text-[13px] group-hover:text-foreground">{n.label}</p>
+                        <p className="mono-data">{n.ticket} · {timeAgo(n.at)}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </HudFrame>
+              )}
+            </section>
+
+            <section>
+              <p className="mono-label mb-2 px-1">NEARBY - BACK AN ISSUE</p>
+              <div className="space-y-2">
+                {nearby.map((c) => (
+                  <TicketRow
+                    key={c.id}
+                    c={c}
+                    action={
+                      <button
+                        onClick={() => meToo(c.id)}
+                        className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider px-2.5 py-1.5 rounded-md bg-accent-soft text-accent-bright border border-accent/30 hover:bg-accent/20 transition-colors"
+                      >
+                        <Plus size={12} />
+                        Me Too · {c.upvotes}
+                      </button>
+                    }
+                  />
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

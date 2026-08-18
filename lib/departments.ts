@@ -1,6 +1,6 @@
 import type { Category, Priority } from "./types";
 
-export const CITY = "Bhopal Municipal Corporation";
+export const CITY = "Greater Chennai Corporation";
 
 export const DEPARTMENTS: Record<
   Category,
@@ -12,7 +12,7 @@ export const DEPARTMENTS: Record<
     officers: ["P. Verma", "N. Joshi"],
   },
   water: {
-    name: "Public Health Engineering — Water",
+    name: "Public Health Engineering - Water",
     code: "WTR",
     officers: ["A. Khan", "M. Tiwari"],
   },
@@ -22,7 +22,7 @@ export const DEPARTMENTS: Record<
     officers: ["S. Iyer", "K. Patel"],
   },
   roads: {
-    name: "Public Works — Roads",
+    name: "Public Works - Roads",
     code: "PWD",
     officers: ["R. Sharma", "D. Gupta"],
   },
@@ -34,7 +34,7 @@ export const DEPARTMENTS: Record<
   corruption: {
     name: "Vigilance Cell",
     code: "VIG",
-    officers: ["Duty Officer — Vigilance"],
+    officers: ["Duty Officer - Vigilance"],
   },
   other: {
     name: "Central Grievance Cell",
@@ -51,13 +51,13 @@ export const SLA_HOURS: Record<Priority, number> = {
 };
 
 export const WARDS = [
-  "Ward 8 — Bairagarh",
-  "Ward 12 — MP Nagar",
-  "Ward 18 — Arera Colony",
-  "Ward 23 — TT Nagar",
-  "Ward 31 — Kolar",
-  "Ward 42 — Shahpura",
-  "Ward 51 — Habibganj",
+  "Ward 8 - Anna Nagar",
+  "Ward 12 - T. Nagar",
+  "Ward 18 - Adyar",
+  "Ward 23 - Mylapore",
+  "Ward 31 - Velachery",
+  "Ward 42 - Guindy",
+  "Ward 51 - Egmore",
 ];
 
 export function departmentFor(category: Category) {

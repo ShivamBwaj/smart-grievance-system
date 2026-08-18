@@ -154,7 +154,7 @@ export default function BoardPage() {
                             )}
                             <div className="min-w-0">
                               <p className="mono-data truncate">{c.anonymous ? "Anon" : c.citizenName}</p>
-                              <p className="mono-data truncate">{c.ward.replace(/^Ward \d+ — /, "")} · {slaLabel(c.slaDueAt, c.status)}</p>
+                              <p className="mono-data truncate">{c.ward.replace(/^Ward \d+ - /, "")} · {slaLabel(c.slaDueAt, c.status)}</p>
                             </div>
                           </div>
                         </div>
@@ -162,7 +162,7 @@ export default function BoardPage() {
                     </div>
                   );
                 })}
-                {items.length === 0 && <p className="mono-data px-1.5 py-3 text-center opacity-60">—</p>}
+                {items.length === 0 && <p className="mono-data px-1.5 py-3 text-center opacity-60">-</p>}
               </div>
             </div>
           );

@@ -60,7 +60,7 @@ export default function OpsOverviewPage() {
     <div className="space-y-6">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="mono-label">BMC OPERATIONS</p>
+          <p className="mono-label">GCC OPERATIONS</p>
           <h1 className="mt-1 text-2xl lg:text-3xl" style={{ fontFamily: "var(--font-display)" }}>
             {greeting()}, {user?.name?.split(" ")[0] ?? "officer"}.
           </h1>

@@ -30,7 +30,7 @@ export async function classifyComplaint(opts: {
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const open = opts.candidates.filter((c) => c.status !== "resolved" && c.status !== "rejected");
 
-  const instructions = `You are CivicLens, the grievance engine for Bhopal Municipal Corporation, India.
+  const instructions = `You are CivicLens, the grievance engine for Greater Chennai Corporation, India.
 
 Read the citizen complaint (any language: Hindi, English, Tamil, or mixed). Return a single JSON object with:
 - language: ISO 639-1 code
@@ -38,7 +38,7 @@ Read the citizen complaint (any language: Hindi, English, Tamil, or mixed). Retu
 - translatedText: faithful English translation (if already English, copy it)
 - summary: one sentence, max 140 chars, English
 - category: one of electricity | water | sanitation | roads | public_services | corruption | other
-- ward: best guess from this list if possible: Ward 8 — Bairagarh, Ward 12 — MP Nagar, Ward 18 — Arera Colony, Ward 23 — TT Nagar, Ward 31 — Kolar, Ward 42 — Shahpura, Ward 51 — Habibganj. If unknown, pick the closest or "Ward 12 — MP Nagar".
+- ward: best guess from this list if possible: Ward 8 - Anna Nagar, Ward 12 - T. Nagar, Ward 18 - Adyar, Ward 23 - Mylapore, Ward 31 - Velachery, Ward 42 - Guindy, Ward 51 - Egmore. If unknown, pick the closest or "Ward 12 - T. Nagar".
 - locationExtracted: landmark / street from the text, or the provided GPS label
 - priority: low | medium | high | urgent
   urgent = immediate danger (open manhole, live wire, flooding into homes, violence)
@@ -55,9 +55,9 @@ Read the citizen complaint (any language: Hindi, English, Tamil, or mixed). Retu
 
 Departments:
 electricity → Electrical & Street Lighting (ELC)
-water → Public Health Engineering — Water (WTR)
+water → Public Health Engineering - Water (WTR)
 sanitation → Health & Sanitation (SAN)
-roads → Public Works — Roads (PWD)
+roads → Public Works - Roads (PWD)
 public_services → Public Services & General Admin (PUB)
 corruption → Vigilance Cell (VIG)
 other → Central Grievance Cell (CGC)
@@ -71,7 +71,7 @@ ${open.slice(0, 18).map((c) => `${c.id} | ${c.category} | ${c.ward} | ${c.locati
   > = [
     {
       type: "text",
-      text: `Complaint text:\n${opts.text || "(no text — classify from the photo)"}\n\nGPS / location label: ${opts.locationLabel || "none"}\nlat: ${opts.lat ?? "n/a"} lng: ${opts.lng ?? "n/a"}`,
+      text: `Complaint text:\n${opts.text || "(no text - classify from the photo)"}\n\nGPS / location label: ${opts.locationLabel || "none"}\nlat: ${opts.lat ?? "n/a"} lng: ${opts.lng ?? "n/a"}`,
     },
   ];
   if (opts.imageDataUrl) {
@@ -93,7 +93,7 @@ ${open.slice(0, 18).map((c) => `${c.id} | ${c.category} | ${c.ward} | ${c.locati
     });
     raw = completion.choices[0]?.message?.content || "{}";
   } catch (err) {
-    // Bad model name, network, quota — degrade to the local classifier so intake never breaks.
+    // Bad model name, network, quota - degrade to the local classifier so intake never breaks.
     console.error("[classify] OpenAI call failed, using heuristic:", err instanceof Error ? err.message : err);
     return heuristicClassify(opts);
   }
@@ -119,8 +119,8 @@ ${open.slice(0, 18).map((c) => `${c.id} | ${c.category} | ${c.ward} | ${c.locati
     category,
     department: dept.name,
     departmentCode: dept.code,
-    ward: String(parsed.ward || "Ward 12 — MP Nagar"),
-    locationExtracted: String(parsed.locationExtracted || opts.locationLabel || "Bhopal"),
+    ward: String(parsed.ward || "Ward 12 - T. Nagar"),
+    locationExtracted: String(parsed.locationExtracted || opts.locationLabel || "Chennai"),
     priority,
     severity: clamp(Number(parsed.severity) || 5, 1, 10),
     sentiment: asSentiment(parsed.sentiment),
@@ -178,13 +178,13 @@ export function heuristicClassify(opts: {
     department: dept.name,
     departmentCode: dept.code,
     ward: guessWard(opts.locationLabel || opts.text),
-    locationExtracted: opts.locationLabel || "Bhopal",
+    locationExtracted: opts.locationLabel || "Chennai",
     priority,
     severity: urgent ? 9 : high ? 7 : 5,
     sentiment: /angry|furious|disgust|घृणा|गुस्सा/.test(t) ? "anger" : urgent ? "distress" : "neutral",
     confidence: 0.62,
     reasoning:
-      "Local fallback classifier (no OPENAI_API_KEY). Keyword match only — confirm before routing.",
+      "Local fallback classifier (no OPENAI_API_KEY). Keyword match only - confirm before routing.",
     isEmergency: urgent,
     slaHours: SLA_HOURS[priority],
     duplicateOfId: null,
@@ -193,12 +193,12 @@ export function heuristicClassify(opts: {
 
 function guessWard(text: string) {
   const t = text.toLowerCase();
-  if (t.includes("bairagarh")) return "Ward 8 — Bairagarh";
-  if (t.includes("mp nagar") || t.includes("mpnagar")) return "Ward 12 — MP Nagar";
-  if (t.includes("arera")) return "Ward 18 — Arera Colony";
-  if (t.includes("tt nagar") || t.includes("new market")) return "Ward 23 — TT Nagar";
-  if (t.includes("kolar")) return "Ward 31 — Kolar";
-  if (t.includes("shahpura")) return "Ward 42 — Shahpura";
-  if (t.includes("habibganj") || t.includes("ratanpur")) return "Ward 51 — Habibganj";
-  return "Ward 12 — MP Nagar";
+  if (t.includes("anna nagar")) return "Ward 8 - Anna Nagar";
+  if (t.includes("t. nagar") || t.includes("t nagar") || t.includes("pondy bazaar")) return "Ward 12 - T. Nagar";
+  if (t.includes("adyar")) return "Ward 18 - Adyar";
+  if (t.includes("mylapore") || t.includes("luz")) return "Ward 23 - Mylapore";
+  if (t.includes("velachery") || t.includes("taramani")) return "Ward 31 - Velachery";
+  if (t.includes("guindy")) return "Ward 42 - Guindy";
+  if (t.includes("egmore") || t.includes("perambur")) return "Ward 51 - Egmore";
+  return "Ward 12 - T. Nagar";
 }

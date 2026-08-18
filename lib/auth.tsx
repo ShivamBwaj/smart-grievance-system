@@ -18,7 +18,7 @@ export type User = {
   email: string;
   phone: string;
   role: Role;
-  /** Officer display name — must match an entry in DEPARTMENTS.officers for queue scoping. */
+  /** Officer display name - must match an entry in DEPARTMENTS.officers for queue scoping. */
   officerName?: string;
   department?: string;
   departmentCode?: string;
@@ -29,12 +29,12 @@ type StoredUser = User & { password: string };
 const SESSION_KEY = "civiclens-auth";
 const REGISTRY_KEY = "civiclens-users";
 
-/** Seeded demo accounts — one per role. Meena's id matches the seed data so her tickets show. */
+/** Seeded demo accounts - one per role. Meena's id matches the seed data so her tickets show. */
 export const DEMO_USERS: StoredUser[] = [
   {
     id: "c-meena",
     name: "Meena Sharma",
-    email: "meena@bhopal.in",
+    email: "meena@chennai.in",
     phone: "+91 98260 44112",
     role: "citizen",
     password: "demo123",
@@ -42,18 +42,18 @@ export const DEMO_USERS: StoredUser[] = [
   {
     id: "o-rsharma",
     name: "R. Sharma",
-    email: "rsharma@bmc.gov.in",
+    email: "rsharma@gcc.gov.in",
     phone: "+91 75540 20031",
     role: "officer",
     officerName: "R. Sharma",
-    department: "Public Works — Roads",
+    department: "Public Works - Roads",
     departmentCode: "PWD",
     password: "demo123",
   },
   {
-    id: "a-bmc",
+    id: "a-gcc",
     name: "Priya Desai",
-    email: "admin@bmc.gov.in",
+    email: "admin@gcc.gov.in",
     phone: "+91 75540 00000",
     role: "admin",
     password: "demo123",

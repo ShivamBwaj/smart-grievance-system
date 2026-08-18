@@ -31,7 +31,7 @@ export function TicketRow({
     <HudFrame className="p-4 flex gap-4 hover:border-border-strong transition-colors">
       <div className={cn("severity-bar", `is-${tone}`)} />
 
-      {/* Evidence thumbnail — large enough to actually read the photo. */}
+      {/* Evidence thumbnail - large enough to actually read the photo. */}
       {c.imageDataUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -46,7 +46,7 @@ export function TicketRow({
       )}
 
       <div className="min-w-0 flex-1">
-        {/* Row 1 — identity + severity + flags, action/time on the right */}
+        {/* Row 1 - identity + severity + flags, action/time on the right */}
         <div className="flex items-start gap-2">
           <div className="flex items-center gap-2 flex-wrap min-w-0">
             <span className="mono-data text-foreground/90 font-medium">{c.id}</span>
@@ -60,12 +60,12 @@ export function TicketRow({
           </div>
         </div>
 
-        {/* Row 2 — the complaint itself, the loudest thing in the card */}
+        {/* Row 2 - the complaint itself, the loudest thing in the card */}
         <p className="mt-2 text-[15px] text-foreground leading-relaxed line-clamp-2">
           {c.summary}
         </p>
 
-        {/* Row 3 — spaced, iconed meta with dividers instead of a cramped run-on line */}
+        {/* Row 3 - spaced, iconed meta with dividers instead of a cramped run-on line */}
         <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
           <span className="meta-chip">
             <User size={13} />
@@ -78,7 +78,7 @@ export function TicketRow({
           </span>
           <span className="meta-chip">
             <MapPin size={13} />
-            {c.ward.replace(/^Ward \d+ — /, "")}
+            {c.ward.replace(/^Ward \d+ - /, "")}
           </span>
           <span className="meta-chip">
             <Radio size={13} />

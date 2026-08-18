@@ -118,7 +118,7 @@ function OpsShell({ children }: { children: ReactNode }) {
         <div className="p-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
           <div className="px-3 py-2.5 rounded-lg flex items-center gap-3 bg-white/[0.02]">
             <div className="w-8 h-8 rounded-full bg-[#c2703e]/10 flex items-center justify-center text-[#c2703e] text-xs font-semibold">
-              {(user?.name ?? "BMC").slice(0, 1)}
+              {(user?.name ?? "GCC").slice(0, 1)}
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-[11px] text-[#a3a3a3] truncate">{user?.name ?? "Duty officer"}</p>

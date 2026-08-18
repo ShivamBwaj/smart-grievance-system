@@ -72,7 +72,7 @@ function LoginInner() {
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-background">
-      {/* LEFT — brand panel */}
+      {/* LEFT - brand panel */}
       <div className="relative hidden lg:flex flex-col justify-between p-12 overflow-hidden border-r border-border">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -93,14 +93,14 @@ function LoginInner() {
         </div>
 
         <div className="relative max-w-md">
-          <p className="mono-label text-accent-bright">Bhopal Municipal Corporation</p>
+          <p className="mono-label text-accent-bright">Greater Chennai Corporation</p>
           <h1 className="mt-4 text-[clamp(30px,4vw,46px)] leading-[1.1] tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
             One console.
             <br />
             <span className="italic text-muted-foreground">Every complaint routed.</span>
           </h1>
           <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-            Sign in to file grievances, work an officer queue, or run the city-wide dashboard. AI classifies, scores, and routes — you close the loop.
+            Sign in to file grievances, work an officer queue, or run the city-wide dashboard. AI classifies, scores, and routes - you close the loop.
           </p>
 
           <div className="mt-8 space-y-2.5">
@@ -121,7 +121,7 @@ function LoginInner() {
         <p className="relative mono-data">Demo build · no data leaves this browser</p>
       </div>
 
-      {/* RIGHT — form */}
+      {/* RIGHT - form */}
       <div className="flex items-center justify-center p-6 sm:p-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

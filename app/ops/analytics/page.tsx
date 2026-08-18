@@ -181,9 +181,9 @@ export default function AnalyticsPage() {
                 <span className="truncate">{o.officer}</span>
                 <span className="text-right tabular">{o.open}</span>
                 <span className="text-right tabular text-positive">{o.resolved}</span>
-                <span className="text-right tabular text-muted-foreground">{o.avgHours != null ? `${Math.round(o.avgHours)}h` : "—"}</span>
+                <span className="text-right tabular text-muted-foreground">{o.avgHours != null ? `${Math.round(o.avgHours)}h` : "-"}</span>
                 <span className="flex justify-end">
-                  {o.rating != null ? <StarRating value={Math.round(o.rating)} size={12} /> : <span className="mono-data">—</span>}
+                  {o.rating != null ? <StarRating value={Math.round(o.rating)} size={12} /> : <span className="mono-data">-</span>}
                 </span>
               </div>
             ))}
@@ -195,7 +195,7 @@ export default function AnalyticsPage() {
         <p className="mono-label">READING THE BOARD</p>
         <ul className="mt-3 space-y-2 text-[14px] text-muted-foreground leading-relaxed">
           <li>
-            {stats.overdue} tickets are past SLA. Urgent load is {stats.urgent} — those should jump the queue.
+            {stats.overdue} tickets are past SLA. Urgent load is {stats.urgent} - those should jump the queue.
           </li>
           <li>
             Average model confidence {Math.round(stats.avgConfidence * 100)}%. Anything under 70% sits in HITL until an

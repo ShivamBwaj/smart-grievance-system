@@ -182,7 +182,7 @@ function TrackInner() {
               <HudFrame active className="p-5 text-center">
                 <p className="mono-label">RATE THE RESOLUTION</p>
                 <p className="mt-1 text-[13px] text-muted-foreground">
-                  {c.feedbackRating ? "Thanks — your feedback trains routing." : "How well was this fixed?"}
+                  {c.feedbackRating ? "Thanks - your feedback trains routing." : "How well was this fixed?"}
                 </p>
                 <div className="mt-3 flex justify-center">
                   <StarRating value={c.feedbackRating} onRate={rate} size={26} />

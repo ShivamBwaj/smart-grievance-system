@@ -38,7 +38,7 @@ export function HeroSection() {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="text-muted-foreground text-[15px] md:text-base leading-relaxed mb-10 max-w-lg"
             >
-              CivicLens reads Hindi, Tamil, English, voice notes, and photos — then
+              CivicLens reads Hindi, Tamil, English, voice notes, and photos - then
               classifies, scores urgency, and routes the ticket to the department that
               can actually close it.
             </motion.p>

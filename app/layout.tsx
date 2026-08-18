@@ -4,8 +4,8 @@ import { AuthProvider } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: {
-    default: "CivicLens — Grievance intelligence for the city",
-    template: "%s · CivicLens",
+    default: "CivicLens",
+    template: "CivicLens",
   },
   description:
     "Multilingual AI that classifies, prioritises, and routes citizen complaints to the department that can actually fix them.",

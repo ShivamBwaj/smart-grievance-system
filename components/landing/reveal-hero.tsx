@@ -141,7 +141,7 @@ export function RevealHero() {
           className="absolute inset-0 bg-center bg-cover bg-no-repeat z-10 hero-breathe"
           style={{ backgroundImage: `url('${BG_NIGHT}')` }}
         />
-        {/* reveal day map — breathes in sync with the base so the spotlight stays aligned */}
+        {/* reveal day map - breathes in sync with the base so the spotlight stays aligned */}
         <div className="absolute inset-0 z-30 hero-breathe pointer-events-none">
           <RevealLayer image={BG_DAY} cursorX={cursorPos.x} cursorY={cursorPos.y} />
         </div>
@@ -183,7 +183,7 @@ export function RevealHero() {
           style={{ animationDelay: "0.85s" }}
         >
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-            Move the light across India — watch grievances surface ward by ward, from night into day.
+            Move the light across India - watch grievances surface ward by ward, from night into day.
           </p>
           <Link
             href="/login?next=/citizen"

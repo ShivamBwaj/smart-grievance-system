@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 
 const channels = [
-  { icon: Languages, title: "Multilingual text", detail: "Hindi, Tamil, English — translated and classified in the same pass." },
+  { icon: Languages, title: "Multilingual text", detail: "Hindi, Tamil, English - translated and classified in the same pass." },
   { icon: Mic, title: "Voice complaints", detail: "Speak it in Chrome. Transcript hits the same classifier as typed text." },
-  { icon: ImagePlus, title: "Photo intake", detail: "Pothole, dump, sparking transformer — vision reads the scene when words fail." },
+  { icon: ImagePlus, title: "Photo intake", detail: "Pothole, dump, sparking transformer - vision reads the scene when words fail." },
   { icon: Droplets, title: "WhatsApp + GPS", detail: "Same ticket from chat. Location tagged so routing hits the right ward." },
 ];
 
@@ -95,7 +95,7 @@ export function HowItWorksSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 relative">
           {[
             { icon: Zap, num: "01", title: "Citizen files", body: "Text, voice, photo, or WhatsApp. GPS optional. Anonymous when it has to be." },
-            { icon: Filter, num: "02", title: "AI classifies once", body: "Language, department, priority, SLA, duplicates — one model call, not a pipeline of models." },
+            { icon: Filter, num: "02", title: "AI classifies once", body: "Language, department, priority, SLA, duplicates - one model call, not a pipeline of models." },
             { icon: Bell, num: "03", title: "Ops routes and closes", body: "HITL override, officer assign, SLA clock. Citizens see status. Clusters show how many people are on the same pothole." },
           ].map((step, i) => (
             <motion.div
@@ -137,7 +137,7 @@ export function ProblemSection() {
             <div>
               <AlertTriangle className="w-5 h-5 text-amber-400 mb-5" />
               <h2 className="text-[clamp(22px,3vw,30px)] font-semibold leading-snug mb-4 tracking-tight">
-                Municipal desks drown in unstructured complaints —{" "}
+                Municipal desks drown in unstructured complaints -{" "}
                 <span className="text-muted-foreground" style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}>
                   and half of them land on the wrong department.
                 </span>
@@ -202,7 +202,7 @@ export function CtaSection() {
           transition={{ delay: 0.15, duration: 0.5 }}
           className="text-sm text-muted-foreground max-w-md mx-auto mb-8"
         >
-          File one ticket. Watch it classify, cluster, and land on a BMC desk.
+          File one ticket. Watch it classify, cluster, and land on a GCC desk.
         </motion.p>
 
         <motion.div
@@ -226,7 +226,7 @@ export function CtaSection() {
               Open ops console
             </Link>
           </div>
-          <p className="text-xs text-muted">Bhopal Municipal Corporation · demo data included</p>
+          <p className="text-xs text-muted">Greater Chennai Corporation · demo data included</p>
         </motion.div>
       </div>
     </section>

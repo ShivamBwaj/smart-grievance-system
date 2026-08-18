@@ -17,7 +17,7 @@ export function Footer() {
                 CivicLens
               </span>
             </Link>
-            <p className="text-xs text-muted">&copy; 2026 CivicLens · BMC Bhopal</p>
+            <p className="text-xs text-muted">&copy; 2026 CivicLens · GCC Chennai</p>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/citizen" className="text-xs text-muted hover:text-muted-foreground transition-colors">

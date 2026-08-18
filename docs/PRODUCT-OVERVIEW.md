@@ -1,13 +1,13 @@
-# CivicLens — Product Overview
+# CivicLens - Product Overview
 
-> **AI grievance intelligence for the city.** One AI pass reads a citizen complaint in any language, classifies it, scores its urgency, routes it to the right department, catches duplicates, and tracks it to resolution — with a full audit trail the citizen can watch.
+> **AI grievance intelligence for the city.** One AI pass reads a citizen complaint in any language, classifies it, scores its urgency, routes it to the right department, catches duplicates, and tracks it to resolution - with a full audit trail the citizen can watch.
 
 - **Repo:** https://github.com/ShivamBwaj/smart-grievance-system
-- **Live demo:** deployed on Vercel — _add the production URL here_
-- **Built for:** VITISH '26 / BGI problem **BT1P1** — Bhopal Municipal Corporation (BMC)
+- **Live demo:** deployed on Vercel - _add the production URL here_
+- **Built for:** VITISH '26 / BGI problem **BT1P1** - Greater Chennai Corporation (GCC)
 - **Status:** working prototype (demo auth + in-memory store; real OpenAI classification)
 
-> This is the single source of truth for the pitch. Every section below is written to be lifted straight into slides — see the [Slide-by-slide PPT outline](#slide-by-slide-ppt-outline) at the end.
+> This is the single source of truth for the pitch. Every section below is written to be lifted straight into slides - see the [Slide-by-slide PPT outline](#slide-by-slide-ppt-outline) at the end.
 
 ---
 
@@ -17,11 +17,11 @@ Municipal grievance redressal in Indian cities is where citizen trust goes to di
 
 | Pain point | What it looks like today |
 |---|---|
-| **Language wall** | Complaints come in Hindi, Tamil, English, or mixed — staff triage in English only. |
+| **Language wall** | Complaints come in Hindi, Tamil, English, or mixed - staff triage in English only. |
 | **Manual routing** | A human reads every complaint and guesses the department. Slow, inconsistent, error-prone. |
 | **Duplicate flood** | One pothole generates 50 tickets. Each is worked separately; nobody sees it's *one* issue affecting many. |
 | **No prioritisation** | An open manhole and a faded signboard sit in the same undifferentiated queue. |
-| **Zero transparency** | The citizen files into a void — no ID, no status, no ETA, no proof of fix. |
+| **Zero transparency** | The citizen files into a void - no ID, no status, no ETA, no proof of fix. |
 | **No accountability** | No SLA clock, no escalation, no way to see which ward or department is failing. |
 
 **The cost:** dangerous issues wait, citizens stop reporting, and the city flies blind.
@@ -30,11 +30,11 @@ Municipal grievance redressal in Indian cities is where citizen trust goes to di
 
 ## 2. The solution
 
-CivicLens puts **one AI pass** at the point of intake and turns a raw complaint into a fully-routed, prioritised, de-duplicated, trackable ticket — instantly.
+CivicLens puts **one AI pass** at the point of intake and turns a raw complaint into a fully-routed, prioritised, de-duplicated, trackable ticket - instantly.
 
 ```mermaid
 flowchart LR
-    A["Citizen files a complaint<br/>text · voice · photo · WhatsApp"] --> B{{"CivicLens AI — one pass"}}
+    A["Citizen files a complaint<br/>text · voice · photo · WhatsApp"] --> B{{"CivicLens AI - one pass"}}
     B --> C["Detect language<br/>+ translate to English"]
     B --> D["Classify department<br/>+ ward"]
     B --> E["Score priority,<br/>severity, emergency"]
@@ -46,11 +46,11 @@ flowchart LR
     J -.feedback trains routing.-> B
 ```
 
-**The one-line pitch:** _Tell the city what broke — in any language, by text, voice, or photo. CivicLens classifies, scores, routes, and tracks it in one pass, and closes the loop with proof._
+**The one-line pitch:** _Tell the city what broke - in any language, by text, voice, or photo. CivicLens classifies, scores, routes, and tracks it in one pass, and closes the loop with proof._
 
 ---
 
-## 3. Who it's for — three roles, three surfaces
+## 3. Who it's for - three roles, three surfaces
 
 ```mermaid
 flowchart TD
@@ -79,13 +79,13 @@ flowchart TD
 |---|---|---|
 | **Citizen** | `/citizen` | File a grievance in seconds; track it; back a neighbour's issue with "Me Too"; rate the fix. |
 | **Officer** | `/ops/queue` | Work an assigned queue, confirm or override the AI's call, assign, and close with photo proof. |
-| **Admin** | `/ops` | Run the whole city — dashboards, escalations, hotspots, department & officer performance. |
+| **Admin** | `/ops` | Run the whole city - dashboards, escalations, hotspots, department & officer performance. |
 
 ---
 
 ## 4. User flows
 
-### 4.1 Citizen journey — file → track → close the loop
+### 4.1 Citizen journey - file → track → close the loop
 
 ```mermaid
 flowchart TD
@@ -100,11 +100,11 @@ flowchart TD
     N --> T
     T --> TR["Track by ID anytime:<br/>stepper · timeline · why-classified · SLA"]
     TR --> RES{Resolved?}
-    RES -->|Yes| RATE["See before/after photo<br/>+ rate 1–5 stars"]
+    RES -->|Yes| RATE["See before/after photo<br/>+ rate 1-5 stars"]
     RES -->|No| TR
 ```
 
-### 4.2 Officer workflow — triage → act → resolve
+### 4.2 Officer workflow - triage → act → resolve
 
 ```mermaid
 flowchart TD
@@ -129,9 +129,9 @@ flowchart LR
     OV["/ops Overview"] --> K["KPI tiles:<br/>open · urgent · SLA breach · AI confidence"]
     OV --> CH["7-day filed vs resolved"]
     OV --> AL["Alerts: HITL + SLA + urgent"]
-    OV --> BRD["/ops/board — Kanban by status"]
-    OV --> HOT["/ops/hotspots — live incident map + ward heat"]
-    OV --> AN["/ops/analytics — dept load, priority mix,<br/>channel split, officer scorecard"]
+    OV --> BRD["/ops/board - Kanban by status"]
+    OV --> HOT["/ops/hotspots - live incident map + ward heat"]
+    OV --> AN["/ops/analytics - dept load, priority mix,<br/>channel split, officer scorecard"]
 ```
 
 ---
@@ -156,7 +156,7 @@ flowchart TD
 
 **What the model returns (per complaint):** language + English translation, a one-line summary, department & ward, priority/severity/emergency flag, a **confidence score**, a plain-English **reasoning** an officer can read, and a **duplicate id** if it matches an open ticket.
 
-**Human-in-the-loop (HITL):** confidence `< 0.70` lands the ticket in `received` for an officer to confirm or override before it's worked — the AI assists, humans decide.
+**Human-in-the-loop (HITL):** confidence `< 0.70` lands the ticket in `received` for an officer to confirm or override before it's worked - the AI assists, humans decide.
 
 ---
 
@@ -176,17 +176,17 @@ stateDiagram-v2
     rejected --> [*]
 ```
 
-**SLA clock** starts at intake by priority — urgent `4h`, high `24h`, medium `72h`, low `168h` — and the UI flags **overdue** and **predicted breaches** for escalation.
+**SLA clock** starts at intake by priority - urgent `4h`, high `24h`, medium `72h`, low `168h` - and the UI flags **overdue** and **predicted breaches** for escalation.
 
 ---
 
 ## 7. Duplicate detection & "Me Too" clustering
 
-Instead of 50 tickets for one pothole, CivicLens collapses reports of the *same physical issue* into **one master ticket** with a rising **impact count** — so the city sees scale, and citizens see they're not alone.
+Instead of 50 tickets for one pothole, CivicLens collapses reports of the *same physical issue* into **one master ticket** with a rising **impact count** - so the city sees scale, and citizens see they're not alone.
 
 ```mermaid
 flowchart LR
-    R1["Report A<br/>'pothole near DB Mall'"] --> CK["Cluster key =<br/>category : ward : location"]
+    R1["Report A<br/>'pothole near Pondy Bazaar'"] --> CK["Cluster key =<br/>category : ward : location"]
     R2["Report B<br/>'same pothole, worse after rain'"] --> CK
     R3["Me Too tap"] --> CK
     CK --> MASTER["Master ticket<br/>impactCount = reports + upvotes"]
@@ -231,7 +231,7 @@ flowchart TB
     OPS --> MAP
 ```
 
-**Data persistence:** the in-memory cache is the source of truth per instance; a JSON file gives warm-instance persistence. On Vercel (read-only FS) it uses the temp dir and **reseeds on cold start** — perfect for a demo, and the seam where a real database (Postgres/Supabase) would drop in.
+**Data persistence:** the in-memory cache is the source of truth per instance; a JSON file gives warm-instance persistence. On Vercel (read-only FS) it uses the temp dir and **reseeds on cold start** - perfect for a demo, and the seam where a real database (Postgres/Supabase) would drop in.
 
 ---
 
@@ -269,21 +269,21 @@ public/evidence Real photo evidence for the demo tickets
 
 ## 10. Key differentiators (the "why us")
 
-1. **One-pass AI** — classify + translate + route + prioritise + de-dupe in a single call, not a pipeline of services.
-2. **Explainable** — every ticket carries a human-readable *reasoning* and a *confidence* score; officers see *why*.
-3. **Human-in-the-loop** — low-confidence tickets wait for a human; the AI never silently mis-routes.
-4. **Language-native** — Hindi, Tamil, English, or mixed, by text/voice/photo.
-5. **Collective signal** — duplicate clustering + "Me Too" surfaces the issues affecting the most people.
-6. **Closed loop with proof** — SLA clock, before/after photos, and citizen ratings that feed back into routing.
-7. **Graceful degradation** — no API key or a failed call falls back to a local classifier; intake never goes down.
+1. **One-pass AI** - classify + translate + route + prioritise + de-dupe in a single call, not a pipeline of services.
+2. **Explainable** - every ticket carries a human-readable *reasoning* and a *confidence* score; officers see *why*.
+3. **Human-in-the-loop** - low-confidence tickets wait for a human; the AI never silently mis-routes.
+4. **Language-native** - Hindi, Tamil, English, or mixed, by text/voice/photo.
+5. **Collective signal** - duplicate clustering + "Me Too" surfaces the issues affecting the most people.
+6. **Closed loop with proof** - SLA clock, before/after photos, and citizen ratings that feed back into routing.
+7. **Graceful degradation** - no API key or a failed call falls back to a local classifier; intake never goes down.
 
 ---
 
 ## 11. Roadmap (post-prototype)
 
 - Real database (Postgres/Supabase) behind the same `store.ts` interface.
-- Real auth (BMC SSO / OTP) replacing the localStorage demo layer.
-- Live WhatsApp intake (Cloud API) — the channel is already modelled.
+- Real auth (GCC SSO / OTP) replacing the localStorage demo layer.
+- Live WhatsApp intake (Cloud API) - the channel is already modelled.
 - Push/SMS notifications on status change.
 - Officer mobile app for field updates + geo-tagged photo capture.
 - Feedback loop that fine-tunes routing from officer overrides + citizen ratings.
@@ -294,21 +294,21 @@ public/evidence Real photo evidence for the demo tickets
 
 > Product-centric deck. Each slide lists the headline + the content to drop in. Diagrams above are ready to screenshot or re-draw.
 
-1. **Title** — CivicLens · "AI grievance intelligence for the city" · team names · repo/live links.
-2. **The problem** — the 6-row pain table (§1). One stat/visual: "one pothole = 50 tickets."
-3. **The solution** — the one-line pitch + the §2 solution flow diagram.
-4. **Who it's for** — the 3 roles/surfaces (§3 diagram + table).
-5. **Citizen journey** — §4.1 flow. Screenshot: the citizen dashboard + file form.
-6. **Officer workflow** — §4.2 flow. Screenshot: queue + ticket drawer (HITL override).
-7. **Admin command** — §4.3 flow. Screenshot: overview KPIs + hotspot map.
-8. **How the AI works** — §5 pipeline diagram; call out confidence + reasoning + fallback.
-9. **Smart de-duplication** — §7 clustering diagram; "impact count" as the hook.
-10. **Lifecycle & SLA** — §6 state diagram; urgent = 4h clock, breach escalation.
-11. **Architecture** — §8 diagram (keep it high-level for a product audience).
-12. **Tech stack** — §9 table (one line each).
-13. **Differentiators** — the 7 bullets (§10).
-14. **Roadmap** — §11 bullets; "prototype → production" framing.
-15. **Demo / thank you** — live link + repo QR + team.
+1. **Title** - CivicLens · "AI grievance intelligence for the city" · team names · repo/live links.
+2. **The problem** - the 6-row pain table (§1). One stat/visual: "one pothole = 50 tickets."
+3. **The solution** - the one-line pitch + the §2 solution flow diagram.
+4. **Who it's for** - the 3 roles/surfaces (§3 diagram + table).
+5. **Citizen journey** - §4.1 flow. Screenshot: the citizen dashboard + file form.
+6. **Officer workflow** - §4.2 flow. Screenshot: queue + ticket drawer (HITL override).
+7. **Admin command** - §4.3 flow. Screenshot: overview KPIs + hotspot map.
+8. **How the AI works** - §5 pipeline diagram; call out confidence + reasoning + fallback.
+9. **Smart de-duplication** - §7 clustering diagram; "impact count" as the hook.
+10. **Lifecycle & SLA** - §6 state diagram; urgent = 4h clock, breach escalation.
+11. **Architecture** - §8 diagram (keep it high-level for a product audience).
+12. **Tech stack** - §9 table (one line each).
+13. **Differentiators** - the 7 bullets (§10).
+14. **Roadmap** - §11 bullets; "prototype → production" framing.
+15. **Demo / thank you** - live link + repo QR + team.
 
 ### Suggested screenshots to capture for slides
 - Citizen dashboard (KPI tiles + file form + ticket cards with photos)
