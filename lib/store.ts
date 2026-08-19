@@ -152,7 +152,11 @@ export async function createComplaint(input: NewComplaintInput): Promise<Complai
           at: now,
           label: input.anonymous
             ? "Anonymous filing (tracking token only)"
-            : `Filed via ${input.channel}`,
+            : `Filed via ${
+                { text: "web portal", voice: "voice", image: "photo upload", whatsapp: "WhatsApp" }[
+                  input.channel
+                ] ?? input.channel
+              }`,
           actor: input.anonymous ? "Anonymous" : input.citizenName,
           kind: "citizen",
         },

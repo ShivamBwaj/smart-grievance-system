@@ -435,7 +435,7 @@ e.g. Pothole outside Marina Mall, T. Nagar — two bikes skidded this morning, p
                   },
                   {
                     label: "Hindi · potholes",
-                    ch: "whatsapp" as Channel,
+                    ch: "text" as Channel,
                     loc: "Anna Nagar 2nd Avenue",
                     body: "अन्ना नगर सेकंड एवेन्यू में सड़क पर बड़े-बड़े गड्ढे हो गए हैं। रोज़ स्कूटर वाले गिर रहे हैं, कृपया जल्दी ठीक करवाएं।",
                   },
