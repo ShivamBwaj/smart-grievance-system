@@ -422,22 +422,28 @@ e.g. Pothole outside Marina Mall, T. Nagar — two bikes skidded this morning, p
               <div className="space-y-2">
                 {[
                   {
-                    label: "Hindi · water outage",
+                    label: "English · live wire",
                     ch: "text" as Channel,
-                    loc: "Adyar",
-                    body: "तीन दिन से वार्ड 18 अड्यार में पानी बिल्कुल नहीं आ रहा है। टैंकर भी नहीं भेजा।",
+                    loc: "Besant Nagar bus depot",
+                    body: "Electric pole near Besant Nagar bus depot is sparking and the wires are hanging low over the footpath. Someone is going to get electrocuted, please send a crew urgently.",
                   },
                   {
-                    label: "Pothole · T. Nagar",
+                    label: "Tamil · sewage overflow",
+                    ch: "text" as Channel,
+                    loc: "KK Nagar 5th Street",
+                    body: "கே.கே. நகர் 5வது தெருவில் கழிவுநீர் சாலையில் வழிந்தோடுகிறது. கடும் நாற்றம், கொசுத்தொல்லை அதிகம். உடனே சரிசெய்யவும்.",
+                  },
+                  {
+                    label: "Hindi · potholes",
                     ch: "whatsapp" as Channel,
-                    loc: "T. Nagar, near Pondy Bazaar",
-                    body: "Same pothole near Pondy Bazaar T. Nagar, even worse after rain. Cars swerving into the other lane.",
+                    loc: "Anna Nagar 2nd Avenue",
+                    body: "अन्ना नगर सेकंड एवेन्यू में सड़क पर बड़े-बड़े गड्ढे हो गए हैं। रोज़ स्कूटर वाले गिर रहे हैं, कृपया जल्दी ठीक करवाएं।",
                   },
                   {
-                    label: "Tamil · open manhole",
+                    label: "English · no water",
                     ch: "text" as Channel,
-                    loc: "Egmore station approach",
-                    body: "எழும்பூர் ரயில் நிலையம் அருகில் திறந்த மான்கோல். குழந்தைகள் விளையாடும் இடம். உடனே மூடவும்.",
+                    loc: "Ashok Nagar 11th Avenue",
+                    body: "No water supply in Ashok Nagar 11th Avenue for the last two days. The area borewell motor has also failed and elderly residents are struggling.",
                   },
                 ].map((s) => (
                   <button
